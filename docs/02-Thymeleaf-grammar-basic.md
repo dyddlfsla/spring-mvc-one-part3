@@ -253,7 +253,8 @@ src/main/resources/static/images/logo.png
 
 ### 2.7 `th:each`
 
-`th:each`는 컬렉션을 반복 출력한다.
+`th:each`는 반복 가능한 객체를 순회하면서  
+현재 요소를 루트(root)로 하는 노드 서브트리를 반복 처리하는 Thymeleaf의 반복 속성이다.
 
 ```html
 <tr th:each="item : ${items}">
@@ -263,7 +264,7 @@ src/main/resources/static/images/logo.png
 </tr>
 ```
 
-이 문법은 자바의 enhanced for문과 비슷하게 이해하면 된다.
+이 문법은 자바의 for문과 유사하다.
 
 ```java
 for (Item item : items) {
@@ -280,18 +281,17 @@ item : ${items}
 는 다음 의미다.
 
 ```text
-${items} 컬렉션에서 요소를 하나씩 꺼내 item이라는 이름으로 사용한다.
+${items}를 순회하면서,각 요소를 item 변수에 바인딩하고,
+현재 요소와 그에 포함된 하위 요소를 HTML로 생성하는 작업을 반복한다.
 ```
 
 ---
 
 #### 2.7.1 어떤 컬렉션을 반복할 수 있는가?
 
-전달된 `items`는 `List` 인터페이스를 충족시키면 된다.
+전달된 `items`는 `List` 인터페이스를 충족시키면 되고, 특정 구현체로 제한되지 않는다.
 
-구현체가 반드시 `ArrayList`일 필요는 없다.
-
-또한, 더 넓게는 반복 가능한 객체라면 사용할 수 있다.
+또한, 더 넓게는 반복 가능한 객체라면 `th:each`에서 순회할 수 있다.
 
 ```text
 List
@@ -301,7 +301,7 @@ Iterable
 Map
 ```
 
-Map은 일반 컬렉션과 다르게 entry 단위로 순회한다.
+Map의 경우, 일반 컬렉션과 다르게 entry 단위로 순회한다.
 
 ---
 
