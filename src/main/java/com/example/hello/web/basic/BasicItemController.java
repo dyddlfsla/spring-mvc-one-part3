@@ -3,11 +3,11 @@ package com.example.hello.web.basic;
 import com.example.hello.domain.item.Item;
 import com.example.hello.domain.item.ItemRepository;
 import jakarta.annotation.PostConstruct;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,11 +19,20 @@ public class BasicItemController {
 
   @GetMapping
   public String items(Model model) {
-
-    model.addAttribute("items", List.of(new Item("itemA", 10000, 10), new Item("itemB", 20000, 5)));
+    model.addAttribute("items", itemRepository.findAll());
 
     return "basic/items";
   }
+
+  @GetMapping("/{itemId}")
+  public String item(@PathVariable long itemId, Model model) {
+    Item item = itemRepository.findById(itemId);
+    model.addAttribute("item", item);
+
+    return "basic/item";
+  }
+
+
 
   @PostConstruct
   public void init() {
