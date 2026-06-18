@@ -34,7 +34,7 @@
       <tr th:each="item : ${items}">
         <td><a href="items.html" th:href="@{/basic/items/${item.id}(item.id=${item.id})}" th:text="${item.id}">상품ID</a></td>
         <td><a href="items.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.itemName}">상품명</a></td>
-        <td th:text="상품가격은 ${item.price}">상품가격</td>
+        <td th:text="${item.price}">상품가격</td>
         <td th:text="${item.quantity}">상품수량</td>
       </tr>
       </tbody>
