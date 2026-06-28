@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/basic/items")
@@ -40,10 +41,14 @@ public class BasicItemController {
   }
 
   @PostMapping("/add")
-  public String save(@ModelAttribute Item item) {
+  public String save(@ModelAttribute Item item, RedirectAttributes redirectAttributes, Model model) {
     itemRepository.save(item);
 
-    return "basic/item";
+    redirectAttributes.addAttribute("itemId", item.getId());
+    redirectAttributes.addAttribute("status", true);
+    redirectAttributes.addFlashAttribute("message", "상품이 정상적으로 등록되었습니다.");
+
+    return "redirect:/basic/items/{itemId}";
   }
 
   @GetMapping("/{itemId}/edit")
